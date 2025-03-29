@@ -1,0 +1,51 @@
+{
+  "description": "Request bounding box annotations for images.",
+  "author": "Your Name",
+  "pipe-schema-version": 1.0,
+  "elements": [
+    {
+      "peN": 0,
+      "peOut": [1],
+      "datasource": {
+        "type": "rawFile"
+      }
+    },
+    {
+      "peN": 1,
+      "peOut": [2],
+      "script": {
+        "path": "request_annos.py",
+        "description": "Request annotations for all images in a folder."
+      }
+    },
+    {
+      "peN": 2,
+      "peOut": [3],
+      "annoTask": {
+        "name": "BoundingBoxAnnotation",
+        "type": "sia",
+        "instructions": "Please draw bounding boxes around all objects in the images.",
+        "configuration": {
+          "tools": {
+            "bbox": true
+          },
+          "annos": {
+            "multilabels": false,
+            "actions": {
+              "draw": true,
+              "label": true,
+              "edit": true
+            },
+            "minArea": 250
+          },
+          "img": {
+            "multilabels": false,
+            "actions": {
+              "label": true
+            }
+          }
+        }
+      }
+    }
+  ]
+}
